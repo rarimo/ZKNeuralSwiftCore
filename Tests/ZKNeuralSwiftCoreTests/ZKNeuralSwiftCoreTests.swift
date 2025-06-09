@@ -1,6 +1,6 @@
 import Testing
 @testable import ZKNeuralSwiftCore
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+@Test func testCore() async throws {
+    let core = ZKNeuralCore()
 }
