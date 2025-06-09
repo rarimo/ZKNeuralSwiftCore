@@ -28,76 +28,28 @@ public class ZKNeuralCore {
         _ circuit: Data,
         _ zkey: Data
     ) throws -> Data {
-        let witnessGenerationCResult = rs_zkneural_generate_witness(
-            innerCore,
-            (circuit as NSData).bytes,
-            .init(circuit.count),
-            (inputJson as NSData).bytes,
-            .init(circuit.count)
-        )
-
-        guard let witnessGenerationResult = witnessGenerationCResult?.pointee.asSwiftResult() else {
-            throw ZkNeuralCoreError.RustCoreError("Failed to generate witness")
+        let wtns = try withRustResult {
+            rs_zkneural_generate_witness(
+                innerCore,
+                (circuit as NSData).bytes,
+                .init(circuit.count),
+                (inputJson as NSData).bytes,
+                .init(circuit.count)
+            )
         }
 
-        rs_zkneural_dealloc_result(witnessGenerationCResult)
-
-        let witnessData = try witnessGenerationResult.getData()
-
-        return Data()
+        return try withRustResult {
+            rs_zkneural_generate_proof(
+                innerCore,
+                (zkey as NSData).bytes,
+                .init(zkey.count),
+                (wtns as NSData).bytes,
+                .init(wtns.count)
+            )
+        }
     }
 
     deinit {
         rs_zkneural_free(innerCore)
     }
-}
-
-extension ZkNeuralCoreResult {
-    func asSwiftResult() -> ZkNeuralCoreSwiftResult {
-        if error != nil {
-            let errorMessage = String(cString: error!)
-
-            return .failure(ZkNeuralCoreError.RustCoreError(errorMessage))
-        }
-
-        let resultData = Data(bytes: value, count: .init(value_size))
-
-        return .success(resultData)
-    }
-}
-
-enum ZkNeuralCoreSwiftResult {
-    case success(Data)
-    case failure(Error)
-
-    var data: Data? {
-        switch self {
-        case .success(let data):
-            return data
-        case .failure:
-            return nil
-        }
-    }
-
-    var error: Error? {
-        switch self {
-        case .success:
-            return nil
-        case .failure(let error):
-            return error
-        }
-    }
-
-    func getData() throws -> Data {
-        switch self {
-        case .success(let data):
-            return data
-        case .failure(let error):
-            throw error
-        }
-    }
-}
-
-public enum ZkNeuralCoreError: Error {
-    case RustCoreError(String)
 }
