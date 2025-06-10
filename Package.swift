@@ -22,8 +22,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "ZkNeuralRustCoreFramework",
-            url: "https://github.com/rarimo/zk-neural-rust-core/releases/download/v0.1.4/ZkNeuralRustCore.xcframework.zip",
-            checksum: "2a091b861c2ecfbf2a627d7644ffbb7c00bc4f143d2d6311998a13cff2944716"
+            url: "https://github.com/rarimo/zk-neural-rust-core/releases/download/v0.1.5/ZkNeuralRustCore.xcframework.zip",
+            checksum: "01bbf04a9787a1023668fa43cdfc57d048394e9e14be37a0182e0b570cac0b42"
         ),
         .testTarget(
             name: "ZKNeuralSwiftCoreTests",

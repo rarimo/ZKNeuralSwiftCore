@@ -10,10 +10,10 @@ public struct ZKNeuralCoreConfiguration {
 }
 
 public class ZKNeuralCore {
-    let configuration: ZKNeuralCoreConfiguration
-    let innerCore: OpaquePointer!
+    private let configuration: ZKNeuralCoreConfiguration
+    private let innerCore: OpaquePointer!
 
-    init(
+    public init(
         configuration: ZKNeuralCoreConfiguration
     ) {
         self.configuration = configuration
@@ -23,7 +23,7 @@ public class ZKNeuralCore {
         rs_zkneural_set_generate_proof_callback(innerCore, configuration.generateProofCallback)
     }
 
-    func generateZkProof(
+    public func generateZkProof(
         _ inputJson: Data,
         _ circuit: Data,
         _ zkey: Data
