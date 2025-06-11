@@ -17,7 +17,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "ZKNeuralSwiftCore",
-            dependencies: ["ZkNeuralRustCoreFramework", "TensorFlowLiteC"],
+            dependencies: ["ZkNeuralRustCoreFramework", "TensorFlowLiteCLib"],
             linkerSettings: [.linkedFramework("SystemConfiguration")]
         ),
         .binaryTarget(
@@ -26,7 +26,7 @@ let package = Package(
             checksum: "90d4eb7e281fd763f73a1d210bcfe4dbe84364415c8e7a7f5b79f529fcc7891d"
         ),
         .binaryTarget(
-            name: "TensorFlowLiteC",
+            name: "TensorFlowLiteCLib",
             url: "https://github.com/rarimo/zk-neural-rust-core/releases/download/v0.1.9/TensorFlowLiteC.xcframework.zip",
             checksum: "d39d7c8b4f0869b0df8078fb6bafa986dbdc8ace85267d367343875297c518f9"
         ),
