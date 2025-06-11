@@ -22,13 +22,13 @@ let package = Package(
         ),
         .binaryTarget(
             name: "ZkNeuralRustCoreFramework",
-            url: "https://github.com/rarimo/zk-neural-rust-core/releases/download/v0.1.6/ZkNeuralRustCore.xcframework.zip",
-            checksum: "01bbf04a9787a1023668fa43cdfc57d048394e9e14be37a0182e0b570cac0b42"
+            url: "https://github.com/rarimo/zk-neural-rust-core/releases/download/v0.1.9/ZkNeuralRustCore.xcframework.zip",
+            checksum: "90d4eb7e281fd763f73a1d210bcfe4dbe84364415c8e7a7f5b79f529fcc7891d"
         ),
         .binaryTarget(
             name: "TensorFlowLiteC",
-            url: "https://github.com/rarimo/zk-neural-rust-core/releases/download/v0.1.6/TensorFlowLiteC.xcframework.zip",
-            checksum: "18a039945175352e168da9c3ff2ab202b9b56484460b5526925f7a72f8a76e8a"
+            url: "https://github.com/rarimo/zk-neural-rust-core/releases/download/v0.1.9/TensorFlowLiteC.xcframework.zip",
+            checksum: "d39d7c8b4f0869b0df8078fb6bafa986dbdc8ace85267d367343875297c518f9"
         ),
         .testTarget(
             name: "ZKNeuralSwiftCoreTests",
