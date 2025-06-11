@@ -53,3 +53,28 @@ public class ZKNeuralCore {
         rs_zkneural_free(innerCore)
     }
 }
+
+public class TensorInvoker {
+    private let invoker: OpaquePointer!
+
+    public init(_ model_data: Data) {
+        self.invoker = rs_zkneural_tensor_invoker_new(
+            (model_data as NSData).bytes,
+            .init(model_data.count)
+        )
+    }
+
+    public func fire_image(_ image_data: Data) throws -> Data {
+        try withRustResult {
+            rs_zkneural_tensor_invoker_image_fire(
+                self.invoker,
+                (image_data as NSData).bytes,
+                .init(image_data.count)
+            )
+        }
+    }
+
+    deinit {
+        rs_zkneural_tensor_invoker_free(invoker)
+    }
+}
