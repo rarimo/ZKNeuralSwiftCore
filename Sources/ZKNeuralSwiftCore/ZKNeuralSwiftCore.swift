@@ -4,6 +4,23 @@
 import Foundation
 import ZkNeuralRustCoreLib
 
+/// Image preprocessing options.
+public enum ImagePreprocessingOptions {
+    /// No preprocessing is applied.
+    case None
+    /// Preprocessing for face recognition.
+    case FaceRecognition
+
+    func toC() -> ImagePreprocessing {
+        switch self {
+        case .FaceRecognition:
+            ZkNeuralRustCoreLib.FaceRecognition
+        case .None:
+            ZkNeuralRustCoreLib.None
+        }
+    }
+}
+
 /// Configuration used to initialize `ZKNeuralCore`.
 public struct ZKNeuralCoreConfiguration {
     public let generateWitnessCallback: GenerateWitnessCallback
@@ -89,12 +106,13 @@ public class TensorInvoker {
     ///   - imageData: The image data to be processed by the model.
     ///
     /// - Returns: The output data from the model invocation in JSON Format.
-    public func fireImage(_ imageData: Data) throws -> Data {
+    public func fireImage(_ imageData: Data, options: ImagePreprocessingOptions = .None) throws -> Data {
         try withRustResult {
             rs_zkneural_tensor_invoker_image_fire(
                 self.invoker,
                 (imageData as NSData).bytes,
-                .init(imageData.count)
+                .init(imageData.count),
+                options.toC()
             )
         }
     }
