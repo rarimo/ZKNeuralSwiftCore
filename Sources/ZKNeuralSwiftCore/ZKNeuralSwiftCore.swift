@@ -21,10 +21,28 @@ public enum ImagePreprocessingOptions {
     }
 }
 
+/// Callback type for generating proof.
+public enum ZKNeuralProvingTypeOptions {
+    /// Groth16 proving backend
+    case Groth
+    /// UltraGroth16 proving backend
+    case UltraGroth
+
+    func toC() -> ZKNeuralProvingType {
+        switch self {
+        case .Groth:
+            ZkNeuralRustCoreLib.Groth
+        case .UltraGroth:
+            ZkNeuralRustCoreLib.UltraGroth
+        }
+    }
+}
+
 /// Configuration used to initialize `ZKNeuralCore`.
 public struct ZKNeuralCoreConfiguration {
     public let generateWitnessCallback: GenerateWitnessCallback
     public let generateProofCallback: GenerateProofCallback
+    public let provingType: ZKNeuralProvingTypeOptions
 }
 
 /// A class that provides functionality to generate zero-knowledge proofs.
@@ -44,6 +62,7 @@ public class ZKNeuralCore {
 
         rs_zkneural_set_generate_witness_callback(innerCore, configuration.generateWitnessCallback)
         rs_zkneural_set_generate_proof_callback(innerCore, configuration.generateProofCallback)
+        rs_zkneural_set_proving_type(innerCore, configuration.provingType.toC())
     }
 
     /// Generates a zero-knowledge proof based on the provided input JSON, circuit, and zkey.
