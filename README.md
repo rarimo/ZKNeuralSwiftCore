@@ -24,7 +24,8 @@ import ZKNeuralSwiftCore
 
 let config = ZKNeuralCoreConfiguration(
     generateWitnessCallback: { /* your witness callback */ },
-    generateProofCallback: { /* your proof callback */ }
+    generateProofCallback: { /* your proof callback */ },
+    provingType: ZKNeuralProvingTypeOptions.UltraGroth
 )
 let core = ZKNeuralCore(configuration: config)
 let proof = try core.generateZkProof(inputJson, circuit, zkey)
