@@ -136,7 +136,48 @@ public class TensorInvoker {
         }
     }
 
+    /// Generates circuit inputs using the provided neural network.
+    ///
+    /// - Parameters:
+    ///  - address: The address of the neural network.
+    ///  - threshold: The threshold value for the neural network.
+    ///  - nonce: The nonce value for the neural network.
+    ///  - imageData: The image data to be processed by the neural network.
+    ///
+    ///  - Returns: The generated circuit inputs in JSON format.
+    public func drainGenericInputs(
+        _ address: String,
+        _ threshold: String,
+        _ nonce: String,
+        _ imageData: Data,
+        options: ImagePreprocessingOptions = .None
+    ) throws -> Data {
+        try withRustResult {
+            rs_zkneural_tensor_invoker_drain_generic_inputs(
+                self.invoker,
+                (imageData as NSData).bytes,
+                .init(imageData.count),
+                options.toC(),
+                stringToMutCChar(address),
+                stringToMutCChar(threshold),
+                stringToMutCChar(nonce)
+            )
+        }
+    }
+
     deinit {
         rs_zkneural_tensor_invoker_free(invoker)
     }
+}
+
+private func stringToMutCChar(_ string: String) -> UnsafeMutablePointer<CChar>? {
+    guard let cString = string.cString(using: .utf8) else {
+        return nil
+    }
+
+    let length = cString.count
+    let buffer = UnsafeMutablePointer<CChar>.allocate(capacity: length)
+    buffer.initialize(from: cString, count: length)
+
+    return buffer
 }
