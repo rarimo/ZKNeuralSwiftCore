@@ -36,6 +36,17 @@ let proof = try core.generateZkProof(inputJson, circuit, zkey)
 ```swift
 let invoker = TensorInvoker(modelData)
 let output = try invoker.fireImage(imageData)
+
+### Example: Generating Generic Inputs for Circuits
+
+```swift
+import ZKNeuralSwiftCore
+
+let invoker = TensorInvoker(modelData)
+
+let inputs = try invoker.drainGenericInputs("3123", "3123", "312", imageData, options: ImagePreprocessing::FaceRecognition) 
+```
+
 ```
 
 ## License
