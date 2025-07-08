@@ -45,7 +45,7 @@ import ZKNeuralSwiftCore
 
 let invoker = TensorInvoker(modelData)
 
-let inputs = try invoker.drainGenericInputs("3123", "3123", "312", imageData, options: ImagePreprocessing::FaceRecognition) 
+let inputs = try invoker.drainGenericInputs("3123", "3123", "312", false, imageData, options: ImagePreprocessing::FaceRecognition) 
 ```
 
 ## License

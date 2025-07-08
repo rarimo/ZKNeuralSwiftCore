@@ -142,6 +142,7 @@ public class TensorInvoker {
     ///  - address: The address of the neural network.
     ///  - threshold: The threshold value for the neural network.
     ///  - nonce: The nonce value for the neural network.
+    ///  - ultraGroth: A boolean indicating whether to use the UltraGroth proving backend.
     ///  - imageData: The image data to be processed by the neural network.
     ///
     ///  - Returns: The generated circuit inputs in JSON format.
@@ -149,6 +150,7 @@ public class TensorInvoker {
         _ address: String,
         _ threshold: String,
         _ nonce: String,
+        _ ultraGroth: Bool,
         _ imageData: Data,
         options: ImagePreprocessingOptions = .None
     ) throws -> Data {
@@ -160,7 +162,8 @@ public class TensorInvoker {
                 options.toC(),
                 stringToMutCChar(address),
                 stringToMutCChar(threshold),
-                stringToMutCChar(nonce)
+                stringToMutCChar(nonce),
+                ultraGroth
             )
         }
     }
